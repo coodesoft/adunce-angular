@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Usuario implements UserDetails{
 	/**
@@ -38,9 +40,22 @@ public class Usuario implements UserDetails{
 	/**
 	 * Rol del usuario
 	 */
+	@JsonIgnore
 	@Enumerated(EnumType.STRING)
 	private Rol rol;
 	
+	/**
+	 * Foto
+	 */
+	private byte[] foto;
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+
 	public Usuario() {
 	}
 
@@ -84,6 +99,7 @@ public class Usuario implements UserDetails{
 	}
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return null;
