@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Afiliado extends Usuario{
 
-	@ManyToOne
+	@ManyToOne(optional=true)
 	@JsonIgnore
 	private Grupo grupo;
 

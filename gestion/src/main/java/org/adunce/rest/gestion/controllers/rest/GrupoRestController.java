@@ -5,6 +5,7 @@ import java.util.List;
 import org.adunce.rest.gestion.model.Grupo;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,14 +19,40 @@ public class GrupoRestController {
 	private GrupoRepository grRepo;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public List<Grupo> get(){
+	public List<Grupo> list(){
 		return grRepo.findAll();
+	}
+	
+	@RequestMapping(value="/{grupo}",method=RequestMethod.GET)
+	public Grupo get(@PathVariable String grupoId){
+		if(grRepo.exists(grupoId)){
+			return grRepo.findOne(grupoId);
+		}
+		return null;
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT)
+	public Boolean save(@RequestParam("grupo")Grupo grupo){
+		if(grRepo.exists(grupo.getShortname())){
+			grRepo.save(grupo);
+			return true;
+		}
+		return false;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public Boolean add(@RequestParam("grupo") Grupo grupo){
 		
 		return true;
+	}
+	
+	@RequestMapping(value="/{grupo}",method=RequestMethod.DELETE)
+	public Boolean delete(@PathVariable String grupoId){
+		if(grRepo.exists(grupoId)){
+			grRepo.delete(grupoId);
+			return true;
+		}
+		return false;
 	}
 	
 }
