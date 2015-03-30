@@ -32,7 +32,7 @@ public class MensajeRestController {
 	}
 	
 	@RequestMapping(value="/{msjId}",method=RequestMethod.GET)
-	public Mensaje get(@PathVariable String msjId){
+	public Mensaje get(@PathVariable Long msjId){
 		if(msjRepo.exists(msjId)){
 			return msjRepo.findOne(msjId);
 		}
@@ -40,7 +40,7 @@ public class MensajeRestController {
 	}
 	
 	@RequestMapping(value="/{msjId}",method=RequestMethod.DELETE)
-	public Boolean delete(@PathVariable String msjId){
+	public Boolean delete(@PathVariable Long msjId){
 		if(msjRepo.exists(msjId)){
 			msjRepo.delete(msjId);
 			return true;
@@ -50,7 +50,7 @@ public class MensajeRestController {
 	
 	@RequestMapping(method=RequestMethod.PUT)
 	public Boolean save(@RequestParam("mensaje") Mensaje mensaje){
-		if(msjRepo.exists(mensaje.getId())){
+		if(msjRepo.exists(mensaje.getMsjId())){
 			msjRepo.save(mensaje);
 			return true;
 		}
@@ -61,7 +61,7 @@ public class MensajeRestController {
 	public Boolean add(@RequestParam("mensaje") Mensaje mensaje, 
 						@RequestParam("remitente") String username,
 						@RequestParam("destinatarios") List<String> usuarios){
-		if(!msjRepo.exists(mensaje.getId())&&usRepo.exists(username)){
+		if(!msjRepo.exists(mensaje.getMsjId())&&usRepo.exists(username)){
 			List<Usuario> lUsuarios = new ArrayList<Usuario>();
 			for(String usuario:usuarios){
 				if (!usRepo.exists(usuario))
@@ -78,7 +78,7 @@ public class MensajeRestController {
 	}
 	
 	@RequestMapping(value="/{msjId}/remitente",method=RequestMethod.GET)
-	public Boolean getRemitente(@PathVariable String msjId){
+	public Boolean getRemitente(@PathVariable Long msjId){
 		if(msjRepo.exists(msjId)){
 			msjRepo.delete(msjId);
 			return true;

@@ -19,7 +19,7 @@ public class Mensaje {
 
 	@Id
 	@GeneratedValue
-	private String msjId;
+	private Long msjId;
 	
 	@ManyToOne
 	@JsonIgnore
@@ -49,12 +49,13 @@ public class Mensaje {
 		this.leido = leido;
 	}
 
-	public String getId() {
+
+	public Long getMsjId() {
 		return msjId;
 	}
 
-	public void setId(String id) {
-		this.msjId = id;
+	public void setMsjId(Long msjId) {
+		this.msjId = msjId;
 	}
 
 	public Usuario getRemitente() {
