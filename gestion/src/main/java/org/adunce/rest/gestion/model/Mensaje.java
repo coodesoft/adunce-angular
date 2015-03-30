@@ -19,7 +19,7 @@ public class Mensaje {
 
 	@Id
 	@GeneratedValue
-	private String id;
+	private String msjId;
 	
 	@ManyToOne
 	@JsonIgnore
@@ -50,11 +50,11 @@ public class Mensaje {
 	}
 
 	public String getId() {
-		return id;
+		return msjId;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.msjId = id;
 	}
 
 	public Usuario getRemitente() {
