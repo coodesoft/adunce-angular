@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()
 					.permitAll()
 			.and()
-			.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);//.csrf().csrfTokenRepository(csrfTokenRepository());
+			.csrf().disable();//.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);//.csrf().csrfTokenRepository(csrfTokenRepository());
 				/*.antMatchers("/public/**").permitAll()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()

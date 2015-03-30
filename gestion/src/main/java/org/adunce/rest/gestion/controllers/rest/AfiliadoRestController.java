@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.adunce.rest.gestion.model.Afiliado;
 import org.adunce.rest.gestion.model.Grupo;
+import org.adunce.rest.gestion.model.security.Rol;
 import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,18 @@ public class AfiliadoRestController {
 	
 	@Autowired
 	private GrupoRepository grRepo;
+	
+	@RequestMapping(value="/loadData",method=RequestMethod.GET)
+	public void loadData(){
+		for (int i=0; i< 10; i++){
+			Afiliado af = new Afiliado();
+			af.setUsuario("Af"+i);
+			af.setActivo(true);
+			af.setContrasenia("Ps"+i);
+			af.setRol(Rol.ADMIN);
+			afRepo.save(af);
+		}
+	}
 	
 	@ApiOperation(value="Retorna a los afiliados.", notes="Retorna una lista completa de todos los afiliados del gremio.",response=Afiliado[].class)
 	@RequestMapping(method=RequestMethod.GET)

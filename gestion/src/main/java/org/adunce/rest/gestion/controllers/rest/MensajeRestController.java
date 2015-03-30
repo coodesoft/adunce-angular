@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wordnik.swagger.annotations.Api;
+
+@Api(value="Mensajes",description="Controlador REST de Mensajes")
 @RequestMapping("/mensajes")
 @RestController
 public class MensajeRestController {
