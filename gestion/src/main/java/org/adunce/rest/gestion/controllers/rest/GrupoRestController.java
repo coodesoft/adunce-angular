@@ -2,7 +2,9 @@ package org.adunce.rest.gestion.controllers.rest;
 
 import java.util.List;
 
+import org.adunce.rest.gestion.model.Afiliado;
 import org.adunce.rest.gestion.model.Grupo;
+import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,9 @@ public class GrupoRestController {
 
 	@Autowired
 	private GrupoRepository grRepo;
+	
+	@Autowired
+	private AfiliadosRepository afRepo;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public List<Grupo> list(){
@@ -61,4 +66,32 @@ public class GrupoRestController {
 		return false;
 	}
 	
+	@RequestMapping(value="/{grupo}/afiliados",method=RequestMethod.GET)
+	public List<Afiliado> getAfiliados(@PathVariable String grupoId){
+		if(grRepo.exists(grupoId)){
+			return grRepo.getOne(grupoId).getAfiliados();
+		}
+		return null;
+	}
+	
+	@RequestMapping(value="/{grupoId}/afiliados/{username}",method=RequestMethod.PUT)
+	public Boolean addAfiliado(@PathVariable String grupoId,@PathVariable String username){
+		if(afRepo.exists(username)&&grRepo.exists(grupoId)){
+			Grupo grupo = grRepo.findOne(grupoId);
+			grupo.getAfiliados().add(afRepo.getOne(username));
+			grRepo.save(grupo);
+			return true;
+		}
+		return false;
+	}
+	@RequestMapping(value="/{grupoId}/afiliados/{username}",method=RequestMethod.DELETE)
+	public Boolean removeAfiliado(@PathVariable String grupoId,@PathVariable String username){
+		if(afRepo.exists(username)&&grRepo.exists(grupoId)){
+			Grupo grupo = grRepo.findOne(grupoId);
+			grupo.getAfiliados().add(afRepo.getOne(username));
+			grRepo.save(grupo);
+			return true;
+		}
+		return false;
+	}
 }

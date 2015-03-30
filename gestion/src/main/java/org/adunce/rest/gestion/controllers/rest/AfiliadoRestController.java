@@ -69,7 +69,7 @@ public class AfiliadoRestController {
 		return false;
 	}
 	
-	@RequestMapping(value="/afiliados/{username}/grupo",method=RequestMethod.GET)
+	@RequestMapping(value="/{username}/grupo",method=RequestMethod.GET)
 	public Grupo getGrupo(@PathVariable String username){
 		if(afRepo.exists(username)){
 			return afRepo.findOne(username).getGrupo();
@@ -77,7 +77,7 @@ public class AfiliadoRestController {
 		return null;
 	}
 	
-	@RequestMapping(value="/afiliados/{username}/{grupo}",method=RequestMethod.PUT)
+	@RequestMapping(value="/{username}/{grupo}",method=RequestMethod.PUT)
 	public Boolean setGrupo(@PathVariable String username, @PathVariable String grupo){
 		if(afRepo.exists(username)&&grRepo.exists(grupo)){
 			Grupo afGrupo = grRepo.findOne(grupo);
