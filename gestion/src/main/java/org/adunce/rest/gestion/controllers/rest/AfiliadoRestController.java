@@ -5,6 +5,7 @@ import java.util.List;
 import org.adunce.rest.gestion.model.Afiliado;
 import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,18 +22,26 @@ public class AfiliadoRestController {
 	private AfiliadosRepository afRepo;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public List<Afiliado> get(){
+	public List<Afiliado> list(){
 		return afRepo.findAll();
 	}
 	
 	
 	@RequestMapping(value="/{username}",method=RequestMethod.GET)
-	public Afiliado getAfiliado(@PathVariable String username){
+	public Afiliado get(@PathVariable String username){
 		if (afRepo.exists(username))
 			return afRepo.getOne(username);
 		return null;
 	}
 	
+	@RequestMapping(value="/{username}",method=RequestMethod.PUT)
+	public Boolean save(@PathVariable String username, @ModelAttribute("afiliado") Afiliado af){
+		if(afRepo.exists(username)){
+			afRepo.save(af);
+			return true;
+		}
+		return false;
+	}
 	
 	@RequestMapping(value="/{username}",method=RequestMethod.DELETE)
 	public Boolean delete(@PathVariable String username){
