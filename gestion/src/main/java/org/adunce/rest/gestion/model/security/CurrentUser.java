@@ -20,7 +20,7 @@ public class CurrentUser extends User {
 	}
 	
 	public String getId(){
-		return user.getUsuario();
+		return user.getUsername();
 	}
 	
 	public Rol getRole(){

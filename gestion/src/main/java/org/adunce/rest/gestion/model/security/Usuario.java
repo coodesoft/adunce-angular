@@ -19,13 +19,13 @@ public class Usuario implements UserDetails{
 	 * Nombre de usuario
 	 */
 	@Id
-	private String usuario;
+	private String username;
 	
 	/**
 	 * Contraseña de acceso al sistema
 	 * Hash
 	 */
-	private String contrasenia;
+	private String password;
 	
 	/**
 	 * Ultima fecha de acceso
@@ -60,26 +60,10 @@ public class Usuario implements UserDetails{
 	}
 
 	public Usuario(String usuario, String contrasenia, Date acceso, String email) {
-		this.usuario = usuario;
-		this.contrasenia = contrasenia;
+		this.username = usuario;
+		this.password = contrasenia;
 		this.acceso = acceso;
 		this.email=email;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getContrasenia() {
-		return contrasenia;
-	}
-
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
 	}
 
 	public Date getAcceso() {
@@ -107,12 +91,20 @@ public class Usuario implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		return getContrasenia();
+		return this.password;
 	}
 
 	@Override
 	public String getUsername() {
-		return getUsuario();
+		return this.username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

@@ -32,9 +32,9 @@ public class AfiliadoRestController {
 	public void loadData(){
 		for (int i=0; i< 10; i++){
 			Afiliado af = new Afiliado();
-			af.setUsuario("Af"+i);
+			af.setUsername("Af"+i);
 			af.setActivo(true);
-			af.setContrasenia("Ps"+i);
+			af.setPassword("Ps"+i);
 			af.setRol(Rol.ADMIN);
 			afRepo.save(af);
 		}
