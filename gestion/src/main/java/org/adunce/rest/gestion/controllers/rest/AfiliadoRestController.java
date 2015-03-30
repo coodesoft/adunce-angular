@@ -3,7 +3,9 @@ package org.adunce.rest.gestion.controllers.rest;
 import java.util.List;
 
 import org.adunce.rest.gestion.model.Afiliado;
+import org.adunce.rest.gestion.model.Grupo;
 import org.adunce.rest.gestion.repositories.AfiliadosRepository;
+import org.adunce.rest.gestion.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,9 @@ public class AfiliadoRestController {
 
 	@Autowired
 	private AfiliadosRepository afRepo;
+	
+	@Autowired
+	private GrupoRepository grRepo;
 	
 	@ApiOperation(value="Retorna a los afiliados.", notes="Retorna una lista completa de todos los afiliados del gremio.",response=Afiliado[].class)
 	@RequestMapping(method=RequestMethod.GET)
@@ -59,6 +64,26 @@ public class AfiliadoRestController {
 	public Boolean delete(@PathVariable String username){
 		if(afRepo.exists(username)){
 			afRepo.delete(afRepo.findOne(username));
+			return true;
+		}
+		return false;
+	}
+	
+	@RequestMapping(value="/afiliados/{username}/grupo",method=RequestMethod.GET)
+	public Grupo getGrupo(@PathVariable String username){
+		if(afRepo.exists(username)){
+			return afRepo.findOne(username).getGrupo();
+		}
+		return null;
+	}
+	
+	@RequestMapping(value="/afiliados/{username}/{grupo}",method=RequestMethod.PUT)
+	public Boolean setGrupo(@PathVariable String username, @PathVariable String grupo){
+		if(afRepo.exists(username)&&grRepo.exists(grupo)){
+			Grupo afGrupo = grRepo.findOne(grupo);
+			Afiliado afiliado = afRepo.findOne(username);
+			afiliado.setGrupo(afGrupo);
+			afRepo.save(afiliado);
 			return true;
 		}
 		return false;
