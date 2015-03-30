@@ -9,6 +9,7 @@ import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +56,7 @@ public class AfiliadoRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
-	public Boolean save(@RequestParam("afiliado") Afiliado af){
+	public Boolean save(@RequestBody Afiliado af){
 		if(afRepo.exists(af.getUsername())){
 			afRepo.save(af);
 			return true;
@@ -64,7 +65,7 @@ public class AfiliadoRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Boolean add(@RequestParam("afiliado") Afiliado afiliado){
+	public Boolean add(@RequestBody Afiliado afiliado){
 		if(!afRepo.exists(afiliado.getUsername())){
 			afiliado.setActivo(false);
 			afRepo.save(afiliado);
