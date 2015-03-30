@@ -13,7 +13,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
