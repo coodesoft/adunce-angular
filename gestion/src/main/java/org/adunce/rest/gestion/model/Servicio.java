@@ -13,7 +13,7 @@ public class Servicio {
 	
 	private String descripcion;
 	
-	private String descripcionHtml;
+	private byte[] imagen;
 
 	public Servicio() {
 		super();
@@ -43,12 +43,12 @@ public class Servicio {
 		this.descripcion = descripcion;
 	}
 
-	public String getDescripcionHtml() {
-		return descripcionHtml;
+	public byte[] getImagen() {
+		return imagen;
 	}
 
-	public void setDescripcionHtml(String descripcionHtml) {
-		this.descripcionHtml = descripcionHtml;
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
 	}
 	
 }

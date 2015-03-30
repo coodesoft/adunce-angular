@@ -14,6 +14,8 @@ public class Afiliado extends Usuario{
 	@JsonIgnore
 	private Grupo grupo;
 
+	private Boolean activo;
+	
 	public Afiliado() {
 		super();
 	}
@@ -24,6 +26,14 @@ public class Afiliado extends Usuario{
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 	
 }

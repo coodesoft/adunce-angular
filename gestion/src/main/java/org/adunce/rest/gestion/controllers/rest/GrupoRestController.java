@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wordnik.swagger.annotations.Api;
+
+@Api(value="Grupos",description="Controlador REST de Grupos")
 @RestController
 @RequestMapping("/REST/grupos")
 public class GrupoRestController {
@@ -42,7 +45,10 @@ public class GrupoRestController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public Boolean add(@RequestParam("grupo") Grupo grupo){
-		
+		if(!grRepo.exists(grupo.getShortname())){
+			grRepo.save(grupo);
+			return true;
+		}
 		return true;
 	}
 	
