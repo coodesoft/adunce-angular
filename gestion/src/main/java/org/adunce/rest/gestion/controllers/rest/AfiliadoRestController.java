@@ -34,7 +34,7 @@ public class AfiliadoRestController {
 	}
 	
 	
-	@RequestMapping(value="/{username}/delete",method=RequestMethod.GET)
+	@RequestMapping(value="/{username}",method=RequestMethod.DELETE)
 	public Boolean delete(@PathVariable String username){
 		if(afRepo.exists(username)){
 			afRepo.delete(afRepo.findOne(username));
