@@ -8,6 +8,7 @@ import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +41,7 @@ public class GrupoRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
-	public Boolean save(@RequestParam("grupo")Grupo grupo){
+	public Boolean save(@RequestBody Grupo grupo){
 		if(grRepo.exists(grupo.getShortname())){
 			grRepo.save(grupo);
 			return true;
@@ -49,7 +50,7 @@ public class GrupoRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Boolean add(@RequestParam("grupo") Grupo grupo){
+	public Boolean add(@RequestBody Grupo grupo){
 		if(!grRepo.exists(grupo.getShortname())){
 			grRepo.save(grupo);
 			return true;

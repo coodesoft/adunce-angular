@@ -8,9 +8,9 @@ import org.adunce.rest.gestion.model.security.Usuario;
 import org.adunce.rest.gestion.model.security.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.Api;
@@ -49,7 +49,7 @@ public class MensajeRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
-	public Boolean save(@RequestParam("mensaje") Mensaje mensaje){
+	public Boolean save(@RequestBody Mensaje mensaje){
 		if(msjRepo.exists(mensaje.getMsjId())){
 			msjRepo.save(mensaje);
 			return true;
@@ -58,9 +58,9 @@ public class MensajeRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Boolean add(@RequestParam("mensaje") Mensaje mensaje, 
-						@RequestParam("remitente") String username,
-						@RequestParam("destinatarios") List<String> usuarios){
+	public Boolean add(@RequestBody Mensaje mensaje, 
+						@RequestBody String username,
+						@RequestBody List<String> usuarios){
 		if(!msjRepo.exists(mensaje.getMsjId())&&usRepo.exists(username)){
 			List<Usuario> lUsuarios = new ArrayList<Usuario>();
 			for(String usuario:usuarios){
