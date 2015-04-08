@@ -34,7 +34,7 @@ public class AfiliadoRestController {
 		for (int i=0; i< 10; i++){
 			Afiliado af = new Afiliado();
 			af.setUsername("Af"+i);
-			af.setActivo(true);
+			af.setEnabled(true);
 			af.setPassword("Ps"+i);
 			af.setRol(Rol.ADMIN);
 			afRepo.save(af);
@@ -67,7 +67,7 @@ public class AfiliadoRestController {
 	@RequestMapping(method=RequestMethod.POST)
 	public Boolean add(@RequestBody Afiliado afiliado){
 		if(!afRepo.exists(afiliado.getUsername())){
-			afiliado.setActivo(false);
+			afiliado.setEnabled(false);
 			afRepo.save(afiliado);
 			return true;
 		}

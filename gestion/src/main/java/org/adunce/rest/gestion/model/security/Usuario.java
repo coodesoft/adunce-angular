@@ -21,6 +21,8 @@ public class Usuario implements UserDetails{
 	@Id
 	private String username;
 	
+	private Boolean enabled;
+	
 	/**
 	 * Contraseña de acceso al sistema
 	 * Hash
@@ -124,7 +126,7 @@ public class Usuario implements UserDetails{
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return enabled;
 	}
 
 	public String getEmail() {
@@ -135,4 +137,12 @@ public class Usuario implements UserDetails{
 		this.email = email;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 }
