@@ -32,6 +32,46 @@ public class GrupoRestController {
 		return grRepo.findAll();
 	}
 	
+	@RequestMapping(value="/loadData",method=RequestMethod.GET)
+	public void loadData(){
+		String[] nombre = {"Facultad de Ciencias Exactas",
+							"Facultad de Ciencias Humanas",
+							"Facultad de Arte",
+							"Facultad de Ciencias Veterinarias",
+							"Facultad de Ciencias Económicas",
+							"Facultad de Derecho",
+							"Facultad de Agronomía",
+							"Facultad de Ingeñiería",
+							"Facultad de Ciencias Sociales",
+							"Escuela Superior de Salud",
+							"Unidad de Enseñanza Universitaria Quequén",
+							"Escuela Nacional Ernesto Sabato",
+							"Escuela Nacional Adolfo Pérez Esquivel",
+							};
+		String[] shortName = {"Exactas",
+				"Humanas",
+				"Arte",
+				"Veterinarias",
+				"Económicas",
+				"Derecho",
+				"Agronomía",
+				"Ingeñiería",
+				"Sociales",
+				"Salud",
+				"Quequén",
+				"Sabato",
+				"Esquivel",
+				};
+		int cont =0;
+		for ( String str: nombre){
+			Grupo g = new Grupo();
+			g.setNombre(str);
+			g.setShortname(shortName[cont]);
+			grRepo.save(g);
+			cont++;
+		}
+	}
+	
 	@RequestMapping(value="/{grupo}",method=RequestMethod.GET)
 	public Grupo get(@PathVariable String grupoId){
 		if(grRepo.exists(grupoId)){
