@@ -66,7 +66,7 @@ public class AfiliadoRestController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public Boolean add(@RequestBody Afiliado afiliado){
-		if(!afRepo.exists(afiliado.getUsername())){
+		if((afiliado.getUsername()==null)||(!afRepo.exists(afiliado.getUsername()))){
 			afiliado.setEnabled(false);
 			afRepo.save(afiliado);
 			return true;
