@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class AsientoDiario {
@@ -13,6 +14,7 @@ public class AsientoDiario {
 	@GeneratedValue
 	private Long id;
 	
+	@OneToMany
 	private List<Movimiento> movimientos;
 	
 }
