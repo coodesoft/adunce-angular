@@ -15,7 +15,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeaderBindingFilter;
 
 
-@Configuration
+ @Configuration
 @EnableGlobalMethodSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
