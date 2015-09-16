@@ -31,7 +31,6 @@ public class Afiliado extends Usuario{
 	private Boolean tieneVehiculo;
 	
 	@OneToMany
-	@JsonIgnore
 	private List<Hijo> hijos;
 	
 	public Afiliado() {

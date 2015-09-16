@@ -1,18 +1,20 @@
 package org.adunce.rest.gestion.controllers.rest;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.adunce.rest.gestion.model.Afiliado;
 import org.adunce.rest.gestion.model.Grupo;
+import org.adunce.rest.gestion.model.Hijo;
 import org.adunce.rest.gestion.model.security.Rol;
 import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
+import org.adunce.rest.gestion.repositories.HijosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.Api;
@@ -28,6 +30,9 @@ public class AfiliadoRestController {
 	
 	@Autowired
 	private GrupoRepository grRepo;
+	
+	@Autowired
+	private HijosRepository sonRepo;
 	
 	@RequestMapping(value="/loadData",method=RequestMethod.GET)
 	public void loadData(){
@@ -66,9 +71,16 @@ public class AfiliadoRestController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public Boolean add(@RequestBody Afiliado afiliado){
+		System.out.println("Estoy agregando un afiliado");
 		if((afiliado.getUsername()==null)||(!afRepo.exists(afiliado.getUsername()))){
 			afiliado.setEnabled(false);
+			Iterator<Hijo> hijos = afiliado.getHijos().iterator();
+			while (hijos.hasNext()){
+				Hijo hijo = hijos.next();
+				sonRepo.save(hijo);
+			}
 			afRepo.save(afiliado);
+			System.out.println("Hijos: " + afiliado.getHijos());
 			return true;
 		}
 		return false;

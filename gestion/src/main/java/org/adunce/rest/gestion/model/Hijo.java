@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Hijo {
 
 	@Id
-	private Long id;
+	private String dni;
 	
 	private Afiliado pariente;
 	
@@ -23,12 +23,12 @@ public class Hijo {
 		super();
 	}
 
-	public Long getId() {
-		return id;
+	public String getId() {
+		return dni;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(String id) {
+		this.dni = id;
 	}
 
 	public Afiliado getPariente() {
