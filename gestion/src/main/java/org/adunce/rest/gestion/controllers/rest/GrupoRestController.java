@@ -98,7 +98,7 @@ public class GrupoRestController {
 		return true;
 	}
 	
-	@RequestMapping(value="/{grupo}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/{grupoId}",method=RequestMethod.DELETE)
 	public Boolean delete(@PathVariable String grupoId){
 		if(grRepo.exists(grupoId)){
 			grRepo.delete(grupoId);
