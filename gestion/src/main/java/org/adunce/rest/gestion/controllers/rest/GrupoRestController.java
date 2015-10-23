@@ -72,7 +72,7 @@ public class GrupoRestController {
 		}
 	}
 	
-	@RequestMapping(value="/{grupo}",method=RequestMethod.GET)
+	@RequestMapping(value="/{grupoId}",method=RequestMethod.GET)
 	public Grupo get(@PathVariable String grupoId){
 		if(grRepo.exists(grupoId)){
 			return grRepo.findOne(grupoId);
@@ -107,7 +107,7 @@ public class GrupoRestController {
 		return false;
 	}
 	
-	@RequestMapping(value="/{grupo}/afiliados",method=RequestMethod.GET)
+	@RequestMapping(value="/{grupoId}/afiliados",method=RequestMethod.GET)
 	public List<Afiliado> getAfiliados(@PathVariable String grupoId){
 		if(grRepo.exists(grupoId)){
 			return grRepo.getOne(grupoId).getAfiliados();
