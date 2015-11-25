@@ -1,6 +1,6 @@
 package org.adunce.rest.gestion.controllers.rest;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.adunce.rest.gestion.model.Afiliado;
@@ -74,12 +74,19 @@ public class AfiliadoRestController {
 		System.out.println("Estoy agregando un afiliado");
 		if((afiliado.getUsername()==null)||(!afRepo.exists(afiliado.getUsername()))){
 			afiliado.setEnabled(false);
-			Iterator<Hijo> hijos = afiliado.getHijos().iterator();
-			while (hijos.hasNext()){
-				Hijo hijo = hijos.next();
-				sonRepo.save(hijo);
-			}
+			//Iterator<Hijo> hijos = afiliado.getHijos().iterator();
+			List<Hijo> hijos = afiliado.getHijos();
+			afiliado.setHijos(null);
 			afRepo.save(afiliado);
+			Afiliado full = afRepo.getOne(afiliado.getUsername());
+			List<Hijo> afHijos = new ArrayList<Hijo>();
+			for (Hijo hijo : hijos){
+				hijo.setPariente(full);
+				afHijos.add(sonRepo.save(hijo));
+			}
+			full.setHijos(afHijos);
+			afRepo.flush();
+			
 			System.out.println("Hijos: " + afiliado.getHijos());
 			return true;
 		}

@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Hijo {
@@ -11,6 +14,8 @@ public class Hijo {
 	@Id
 	private String dni;
 	
+	@JsonIgnore
+	@ManyToOne
 	private Afiliado pariente;
 	
 	private Parentesco parentesco;
