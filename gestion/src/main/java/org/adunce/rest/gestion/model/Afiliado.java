@@ -30,6 +30,10 @@ public class Afiliado extends Usuario{
 	
 	private Boolean tieneVehiculo;
 	
+	private String cuil;
+	
+	private String legajo;
+	
 	@OneToMany
 	private List<Hijo> hijos;
 	
