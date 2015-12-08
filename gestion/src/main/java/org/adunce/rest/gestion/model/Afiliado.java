@@ -104,5 +104,22 @@ public class Afiliado extends Usuario{
 	public void setHijos(List<Hijo> hijos) {
 		this.hijos = hijos;
 	}
+
+	public String getCuil() {
+		return cuil;
+	}
+
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
+	}
+
+	public String getLegajo() {
+		return legajo;
+	}
+
+	public void setLegajo(String legajo) {
+		this.legajo = legajo;
+	}
+	
 	
 }
