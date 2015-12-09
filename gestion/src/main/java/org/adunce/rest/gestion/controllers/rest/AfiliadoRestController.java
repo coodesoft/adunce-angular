@@ -97,7 +97,10 @@ public class AfiliadoRestController {
 	public Boolean delete(@PathVariable String username){
 		if(afRepo.exists(username)){
 			Afiliado afiliado = afRepo.findOne(username);
-			for(Hijo hijo : afiliado.getHijos()){
+			List<Hijo> hijos = new ArrayList<Hijo>(afiliado.getHijos());
+			afiliado.setHijos(null);
+			afRepo.save(afiliado);
+			for(Hijo hijo : hijos){
 				sonRepo.delete(hijo);
 			}
 			afRepo.delete(afiliado);
