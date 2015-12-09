@@ -96,7 +96,11 @@ public class AfiliadoRestController {
 	@RequestMapping(value="/{username}",method=RequestMethod.DELETE)
 	public Boolean delete(@PathVariable String username){
 		if(afRepo.exists(username)){
-			afRepo.delete(afRepo.findOne(username));
+			Afiliado afiliado = afRepo.findOne(username);
+			for(Hijo hijo : afiliado.getHijos()){
+				sonRepo.delete(hijo);
+			}
+			afRepo.delete(afiliado);
 			return true;
 		}
 		return false;
