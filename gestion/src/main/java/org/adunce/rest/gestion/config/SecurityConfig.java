@@ -1,5 +1,6 @@
 package org.adunce.rest.gestion.config;
 
+import org.adunce.rest.gestion.filters.CsrfHeaderFilter;
 import org.adunce.rest.gestion.services.CurrentUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-
-import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeaderBindingFilter;
 
 
 @Configuration
@@ -38,31 +37,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception{
-		http
-			.authorizeRequests()
-				.anyRequest()
-					.permitAll()
-			.and()
-			.csrf().disable();//.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);//.csrf().csrfTokenRepository(csrfTokenRepository());
-				/*.antMatchers("/public/**").permitAll()
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.loginPage("/login")
-					.permitAll()
-				.and()
-			.antMatcher("/login/**").csrf().disable()
-			.authorizeRequests()
-				.antMatchers("/login/**")
-					.permitAll()
-				.and()
-			.logout()
-				//.logoutUrl("/logout")
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-					.logoutSuccessUrl("/login")
-					.permitAll();*/
+		//Esto es para desarrollo,si open es true entonces se desactiva la seguridad.
+		boolean open=false;
+		if (open){
+			http.httpBasic().and().authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+		} else {
+			http
+				.httpBasic().and()
+				.authorizeRequests()
+					.anyRequest()
+						.authenticated()
+						.and()
+				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+				.csrf()
+					.csrfTokenRepository(csrfTokenRepository());
 		}
+	}
 	
 	private CsrfTokenRepository csrfTokenRepository() {
 		  HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();

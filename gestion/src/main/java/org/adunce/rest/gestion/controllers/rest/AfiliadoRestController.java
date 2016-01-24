@@ -1,11 +1,17 @@
 package org.adunce.rest.gestion.controllers.rest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.ConstraintViolationException;
 
 import org.adunce.rest.gestion.model.Afiliado;
+import org.adunce.rest.gestion.model.ErrorNotification;
 import org.adunce.rest.gestion.model.Grupo;
 import org.adunce.rest.gestion.model.Hijo;
+import org.adunce.rest.gestion.model.response.afiliados.MassiveLoadResponse;
 import org.adunce.rest.gestion.model.security.Rol;
 import org.adunce.rest.gestion.repositories.AfiliadosRepository;
 import org.adunce.rest.gestion.repositories.GrupoRepository;
@@ -97,12 +103,12 @@ public class AfiliadoRestController {
 	public Boolean delete(@PathVariable String username){
 		if(afRepo.exists(username)){
 			Afiliado afiliado = afRepo.findOne(username);
-			List<Hijo> hijos = new ArrayList<Hijo>(afiliado.getHijos());
-			afiliado.setHijos(null);
-			afRepo.save(afiliado);
-			for(Hijo hijo : hijos){
-				sonRepo.delete(hijo);
-			}
+//			List<Hijo> hijos = new ArrayList<Hijo>(afiliado.getHijos());
+//			afiliado.setHijos(null);
+//			afRepo.save(afiliado);
+//			for(Hijo hijo : hijos){
+//				sonRepo.delete(hijo);
+//			}
 			afRepo.delete(afiliado);
 			return true;
 		}
@@ -127,5 +133,34 @@ public class AfiliadoRestController {
 			return true;
 		}
 		return false;
+	}
+	
+	@RequestMapping(value="/massiveLoad",method=RequestMethod.POST)
+	public MassiveLoadResponse massiveLoad(@RequestBody List<Afiliado> afiliados){
+		MassiveLoadResponse response = new MassiveLoadResponse();
+		Map<Afiliado,ErrorNotification> errores = new HashMap<Afiliado,ErrorNotification>();
+		List<Afiliado> afiliadosOk = new ArrayList<Afiliado>();
+		for (Afiliado af : afiliados){
+			if (!afRepo.exists(af.getUsername())){
+				try {
+//					List<Hijo> savedChildren = new ArrayList<Hijo>();
+//					for (Hijo hijo : af.getHijos()){
+//						Hijo saved = sonRepo.save(hijo);
+//						savedChildren.add(saved);
+//					}
+//					af.setHijos(savedChildren);
+					afRepo.save(af);
+					afRepo.flush();
+					afiliadosOk.add(af);
+				} catch (ConstraintViolationException e){
+					errores.put(af, ErrorNotification.AFILIADO_00002);
+				}
+			} else {
+				errores.put(af, ErrorNotification.AFILIADO_00001);
+			}
+		}
+		response.setAfiliadosConError(errores);
+		response.setAfiliadosAgregados(afiliadosOk);
+		return response;
 	}
 }

@@ -2,7 +2,8 @@ package org.adunce.rest.gestion.model;
 
 public enum Sexo {
 	FEMENINO("femenino"),
-	MASCULINO("masculino");
+	MASCULINO("masculino"),
+	DESCONOCIDO("desconocido");
 	
 	private String sexo;
 	

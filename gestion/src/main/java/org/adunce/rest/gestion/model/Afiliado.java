@@ -3,10 +3,12 @@ package org.adunce.rest.gestion.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.adunce.rest.gestion.model.contabilidad.Prestamo;
 import org.adunce.rest.gestion.model.security.Usuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,8 +36,14 @@ public class Afiliado extends Usuario{
 	
 	private String legajo;
 	
-	@OneToMany
+	private Integer cantidadHijos;
+	
+	@OneToMany(cascade={CascadeType.ALL})
 	private List<Hijo> hijos;
+	
+	@OneToMany(cascade={CascadeType.ALL})
+	private List<Prestamo> prestamos;
+	
 	
 	public Afiliado() {
 		super();
@@ -120,6 +128,21 @@ public class Afiliado extends Usuario{
 	public void setLegajo(String legajo) {
 		this.legajo = legajo;
 	}
-	
+
+	public List<Prestamo> getPrestamos() {
+		return prestamos;
+	}
+
+	public void setPrestamos(List<Prestamo> prestamos) {
+		this.prestamos = prestamos;
+	}
+
+	public Integer getCantidadHijos() {
+		return cantidadHijos;
+	}
+
+	public void setCantidadHijos(Integer cantidadHijos) {
+		this.cantidadHijos = cantidadHijos;
+	}
 	
 }
